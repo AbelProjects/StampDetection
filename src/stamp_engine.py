@@ -91,16 +91,3 @@ class FolderEngine:
             self._move_all_files_by_stamp()
         else:
             self._copy_all_files_by_stamp()
-
-
-
-
-    def sort_stamp_files_folders(self, stamp_folder: str, no_stamp_folder: str) -> None:
-        '''
-        Function sort files in two folders. First folder contains documents with stamp inside.
-        Second folder contains documents without stamp.
-        :param stamp_folder: Folder with stamped documents
-        :param no_stamp_folder: Folder with documents without stamp
-        :return: None
-        '''
-        pass
