@@ -10,6 +10,7 @@ from numpy import ndarray
 def image_imshow(img: ndarray, figsize: Tuple[int, int] = (10, 10)) -> None:
     fig = plt.figure(figsize=figsize)
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    plt.show()
 
 
 def _blue_color_mask(img: ndarray) -> ndarray:

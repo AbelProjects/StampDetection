@@ -12,7 +12,7 @@ class PdfObject:
             self.file_path = file_path
         else:
             raise ValueError(f'{file_path} is not a pdf file!')
-        self.images = None
+        self.images = {}
         self.is_fitted_stamp = False
         self.stamp_flg = None
 
@@ -26,6 +26,8 @@ class PdfObject:
         self.images = images
 
     def find_stamps(self):
+        if not self.images:
+            self.get_images()
         for key in self.images.keys():
             self.images[key].find_stamps()
         self.is_fitted_stamp = True

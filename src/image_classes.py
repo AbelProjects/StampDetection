@@ -32,9 +32,18 @@ class ImageObject:
     def save_image(self, file_path: str) -> None:
         cv2.imwrite(file_path, self.matrix)
 
+    def show_image(self):
+        image_utils.image_imshow(self.matrix)
+
     def find_stamps(self) -> None:
         self.circles = image_utils.image_find_stamps(self.matrix)
         self.is_fitted_stamp = True
         self.stamp_flg = image_utils.is_stamped_from_circles(self.circles)
         self.boxes = image_utils.squares_from_circles(self.circles)
+
+    def show_stamp_image(self):
+        if self.circles is None:
+            raise ValueError("Please find stamps before show them")
+        image_utils.image_imshow(image_utils.image_draw_circles(self.matrix, self.circles))
+
 
