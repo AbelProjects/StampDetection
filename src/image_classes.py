@@ -40,6 +40,7 @@ class ImageObject:
         self.is_fitted_stamp = True
         self.stamp_flg = image_utils.is_stamped_from_circles(self.circles)
         self.boxes = image_utils.squares_from_circles(self.circles)
+        self.n_stamps = len(self.circles)
 
     def show_stamp_image(self):
         if self.circles is None:

@@ -32,4 +32,5 @@ class PdfObject:
             self.images[key].find_stamps()
         self.is_fitted_stamp = True
         self.stamp_flg = reduce(lambda x, y: x or y, [x.stamp_flg for x in self.images.values()])
+        self.n_stamps = reduce(lambda x, y: x + y, [x.n_stamps for x in self.images.values()])
 

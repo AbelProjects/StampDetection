@@ -5,6 +5,7 @@ import os
 import matplotlib.pyplot as plt
 from typing import Tuple, List
 from numpy import ndarray
+from copy import deepcopy
 
 
 def image_imshow(img: ndarray, figsize: Tuple[int, int] = (10, 10)) -> None:
@@ -24,12 +25,16 @@ def _blue_color_mask(img: ndarray) -> ndarray:
     return selection_blur
 
 
-def _find_circles(img: ndarray) -> ndarray:
-    min_rad = round(img.shape[0] * 17 / 297)
+def _find_circles(img: ndarray, alt = True) -> ndarray:
+    min_rad = round(img.shape[0] * 15 / 297)
     max_rad = round(img.shape[0] * 30 / 297)
     dist_stamps = 2 * min_rad
-    circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT_ALT, 1.5, dist_stamps, param1=200,
-                               param2=0.4, minRadius=min_rad, maxRadius=max_rad)
+    if alt:
+        circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT_ALT, 1.5, dist_stamps, param1=200,
+                                   param2=0.4, minRadius=min_rad, maxRadius=max_rad)
+    else:
+        circles = cv2.HoughCircles(matr, cv2.HOUGH_GRADIENT, 1, dist_stamps, param1=20,
+                         param2=30, minRadius=min_rad, maxRadius=max_rad)
     if circles is not None:
         circles = np.uint16(np.around(circles))
         return circles[0, :]
@@ -67,9 +72,10 @@ def is_stamped_from_circles(circles: ndarray) -> bool:
 
 
 def image_draw_circles(img: ndarray, circles: ndarray) -> ndarray:
+    new_img = deepcopy(img)
     for i in circles:
-        cv2.circle(img, (i[0], i[1]), i[2], (165, 25, 165), 2)
-    return img
+        cv2.circle(new_img, (i[0], i[1]), i[2], (165, 25, 165), 2)
+    return new_img
 
 
 def _square_from_circle(circle: ndarray) -> ndarray:
