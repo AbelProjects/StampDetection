@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 RUN apt-get update && apt-get install wget build-essential cmake libfreetype6-dev pkg-config libfontconfig-dev libjpeg-dev libopenjp2-7-dev -y
 RUN wget https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz \
