@@ -29,7 +29,7 @@ def success():
         def delete(response):
             os.remove('result.zip')
             return response
-
+        os.rmdir(folder_path)
         return send_file('result.zip')
 
 # Running the app
