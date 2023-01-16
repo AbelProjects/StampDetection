@@ -20,12 +20,19 @@ class PdfObject:
         self.stamp_flg = None
 
     def get_images(self):
-        pages = pdf2image.convert_from_path(self.file_path)
+        dpi = 200 
+        zoom = dpi / 72
+        magnify = fitz.Matrix(zoom, zoom) 
+        doc = fitz.open(self.file_path)
         images = {}
-        for i in range(len(pages)):
-            img = np.asarray(pages[i])
+        for page in doc:
+            pix = page.get_pixmap(matrix=magnify)  
+            pix.save(f"page-{page.number}.png")
+            img = imread(f"page-{page.number}.png")
+            img = np.asarray(img)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-            images[i] = ImageObject(matrix=img)
+            images[page.number] = ImageObject(matrix=img)
+            os.remove(f"page-{page.number}.png")
         self.images = images
 
     def find_stamps(self):
