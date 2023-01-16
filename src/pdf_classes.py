@@ -3,6 +3,9 @@ import pdf2image
 from image_classes import ImageObject
 from functools import reduce
 import cv2
+import os
+import fitz
+from imageio.v2 import imread
 
 
 class PdfObject:
