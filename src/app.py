@@ -26,10 +26,12 @@ def success():
         engine.make_stamp_folders(folders_path=folder_path, move_files=True)
         shutil.make_archive("result","zip", folder_path)
         shutil.rmtree(folder_path)
+
         @app.after_request
         def delete(response):
             os.remove('result.zip')
             return response
+            
         return send_file('result.zip')
 
 # Running the app
