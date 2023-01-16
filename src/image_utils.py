@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from typing import Tuple, List
 from numpy import ndarray
 from copy import deepcopy
+import poppler
 
 
 def image_imshow(img: ndarray, figsize: Tuple[int, int] = (10, 10)) -> None:
