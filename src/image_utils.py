@@ -34,7 +34,7 @@ def _find_circles(img: ndarray, alt = True) -> ndarray:
         circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT_ALT, 1.5, dist_stamps, param1=200,
                                    param2=0.4, minRadius=min_rad, maxRadius=max_rad)
     else:
-        circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, dist_stamps, param1=20,
+        circles = cv2.HoughCircles(matr, cv2.HOUGH_GRADIENT, 1, dist_stamps, param1=20,
                          param2=30, minRadius=min_rad, maxRadius=max_rad)
     if circles is not None:
         circles = np.uint16(np.around(circles))
