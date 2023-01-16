@@ -27,11 +27,11 @@ def success():
         shutil.make_archive("result","zip", folder_path)
         shutil.rmtree(folder_path)
 
-        @app.after_request
+        @app.teardown_request
         def delete(response):
             os.remove('result.zip')
             return response
-            
+
         return send_file('result.zip')
 
 # Running the app
