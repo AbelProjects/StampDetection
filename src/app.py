@@ -17,7 +17,7 @@ def success():
     if request.method == 'POST':  
         f = request.files['file']
         f.save(f.filename)
-        data = zipfile.ZipFile(f'{f.filename}', 'rb')
+        data = zipfile.ZipFile(f'{f.filename}', 'r')
         data.extractall()
         os.remove(f.filename)
         relative_folder_path = f'./{f.filename.split(".")[0]}'
@@ -28,7 +28,7 @@ def success():
         shutil.rmtree(folder_path)
 
         def stream_and_remove_file(filename):
-            file_handle = open(filename, 'r')
+            file_handle = open(filename, 'rb')
             yield from file_handle
             file_handle.close()
             os.remove(filename)
