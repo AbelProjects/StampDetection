@@ -27,12 +27,16 @@ def success():
         shutil.make_archive("result","zip", folder_path)
         shutil.rmtree(folder_path)
 
-        @app.teardown_request
-        def delete(response):
-            os.remove('result.zip')
-            return response
+        def stream_and_remove_file(filename):
+            file_handle = open(filename, 'r')
+            yield from file_handle
+            file_handle.close()
+            os.remove(filename)
 
-        return send_file('result.zip')
+        return app.response_class(
+        stream_and_remove_file(filename='./result.zip'),
+        headers={'Content-Disposition': 'attachment', 'filename': 'result.zip'}
+    )
 
 # Running the app
 if __name__ == '__main__':
