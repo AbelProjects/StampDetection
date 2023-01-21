@@ -17,7 +17,7 @@ def success():
     if request.method == 'POST':  
         f = request.files['file']
         f.save(f.filename)
-        data = zipfile.ZipFile(f'{f.filename}', 'r')
+        data = zipfile.ZipFile(f'{f.filename}', 'rb')
         data.extractall()
         os.remove(f.filename)
         relative_folder_path = f'./{f.filename.split(".")[0]}'
