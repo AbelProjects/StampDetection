@@ -35,7 +35,8 @@ def success():
 
         return app.response_class(
         stream_and_remove_file(filename='./result.zip'),
-        headers={'Content-Disposition': 'attachment', 'filename': 'result.zip'}
+        headers={'Content-Type': 'application/zip', 
+        'Content-Disposition': 'attachment', 'filename': 'result.zip'}
     )
 
 # Running the app
