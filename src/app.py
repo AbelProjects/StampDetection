@@ -17,8 +17,23 @@ def success():
     if request.method == 'POST':  
         f = request.files['file']
         f.save(f.filename)
-        data = zipfile.ZipFile(f'{f.filename}', 'r')
-        data.extractall()
+
+        def unpack_zipfile(filename, extract_dir, encoding='utf8'):
+            with zipfile.ZipFile(filename) as archive:
+                for entry in archive.infolist():
+                    name = entry.filename.encode('cp437').decode(encoding)  
+                    
+                    if name.startswith('/') or '..' in name:
+                        continue
+
+                    target = os.path.join(extract_dir, *name.split('/'))    
+                    os.makedirs(os.path.dirname(target), exist_ok=True)
+                    if not entry.is_dir(): 
+                        with archive.open(entry) as source, open(target, 'wb') as dest:
+                            shutil.copyfileobj(source, dest)
+
+        unpack_zipfile(f'{f.filename}', f'./', encoding='utf8')
+
         os.remove(f.filename)
         relative_folder_path = f'./{f.filename.split(".")[0]}'
         folder_path = os.path.abspath(relative_folder_path)
