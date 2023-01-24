@@ -4,6 +4,7 @@ import zipfile
 import os
 from pathlib import Path
 import shutil
+import transliterate
 
 app = Flask(__name__)
 
@@ -47,11 +48,13 @@ def success():
             yield from file_handle
             file_handle.close()
             os.remove(filename)
+        
+        send_file_name = transliterate.translit(f'{f.filename}', reversed=True)
 
         return app.response_class(
         stream_and_remove_file(filename='./result.zip'),
         headers={'Content-Type': 'application/zip', 
-        'Content-Disposition': f'attachment; filename={f.filename}'}
+        'Content-Disposition': f'attachment; filename={send_file_name}'}
     )
 
 # Running the app
