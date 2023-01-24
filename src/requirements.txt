@@ -4,3 +4,4 @@ matplotlib==3.6.2
 numpy==1.23.5
 opencv_python_headless==4.5.4.60
 PyMuPDF==1.21.1
+transliterate==1.10.2
